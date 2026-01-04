@@ -57,19 +57,22 @@ export default function Countdown({ targetDate }: CountdownProps) {
     ]
 
     return (
-        <div className={`${styles.countdown} flex`}>
-            {timeUnits.map(({ label, value }, index) => (
-                <div key={label} className="flex items-center">
-                    <div className="flex flex-col gap-4 items-center">
-                        <p className="text-9xl font-normal">{pad(value)}</p>
-                        <p className="text-3xl font-bold opacity-50">{label}</p>
-                    </div>
+        <div className={styles.countdown}>
+            <h1 className='text-7xl text-white font-bold text-center mb-24'>China Family Trip 2026</h1>
+            <div className="flex justify-center">
+                {timeUnits.map(({ label, value }, index) => (
+                    <div key={label} className="flex items-center">
+                        <div className="flex flex-col gap-4 items-center">
+                            <p className="text-9xl font-normal">{pad(value)}</p>
+                            <p className="text-3xl font-bold opacity-50">{label}</p>
+                        </div>
 
-                    {index !== timeUnits.length - 1 && (
-                        <div className="mx-20 w-0.5 h-17.5 bg-gray-300" />
-                    )}
-                </div>
-            ))}
+                        {index !== timeUnits.length - 1 && (
+                            <div className="mx-20 w-0.5 h-17.5 bg-gray-300" />
+                        )}
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }

@@ -7,11 +7,9 @@ function App() {
 
   return (
     <>
-      <div className='flex flex-col gap-48 items-center'>
-
+      <div className='flex flex-col gap-48 items-center mb-24'>
         {/* Countdown & Clock */}
         <div className='flex flex-col mt-24 space-y-24'>
-
           {/* Countdown */}
           <Countdown targetDate="2026-02-18T00:00:00" />
 
