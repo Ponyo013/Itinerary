@@ -59,11 +59,11 @@ export default function Itinerary() {
         <div>
             {/* On Going */}
 
-            
+
             {/* List Itinerary */}
             <div>
-                <h1 className={`${Styles.itineraryhead} text-7xl text-white font-bold mb-12 text-center`}>Itinerary</h1>
-                <div className={`${Styles.itinerarybody} flex flex-col gap-12`}>
+                <h1 className={`${Styles.head} text-7xl text-white font-bold mb-12 text-center`}>Itinerary</h1>
+                <div className={`${Styles.body} flex flex-col gap-12`}>
                     {Object.entries(groupedData).map(([date, items], index) => (
                         <div key={date} className="flex flex-col bg-white rounded-xl p-10 gap-8">
                             <div className="flex flex-col gap-2 font-bold text-[#740001]">

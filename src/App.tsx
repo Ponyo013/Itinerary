@@ -2,12 +2,12 @@ import './App.css'
 import Clock from './components/Clock'
 import Countdown from './components/Countdown'
 import Itinerary from './components/Itinerary'
+import Documents from './components/Documents'
 
 function App() {
-
   return (
     <>
-      <div className='flex flex-col gap-48 items-center mb-24'>
+      <div className='flex flex-col gap-36 items-center mb-24'>
         {/* Countdown & Clock */}
         <div className='flex flex-col mt-24 space-y-24'>
           {/* Countdown */}
@@ -20,9 +20,11 @@ function App() {
           </div>
         </div>
 
+        {/* Documents */}
+        <Documents />
+
         {/* Itinerary */}
         <Itinerary />
-
       </div>
     </>
   )
