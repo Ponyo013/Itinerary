@@ -1,0 +1,20 @@
+.countdown {
+  font-family: "Inria serif", sans-serif;
+  color: white;
+  text-shadow: 0 4px 24px rgba(252, 185, 156, 0.6);
+}
+
+.clock {
+  font-family: "Inria sans", sans-serif;
+  color: white;
+  background-color: rgba(123, 58, 59, 1);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.25);
+}
+
+.itineraryhead {
+  font-family: "Inria serif", sans-serif;
+  text-shadow: 0 8px 4px rgba(0, 0, 0, 0.25);
+}
+
+.itinerarybody {
+}
