@@ -38,15 +38,15 @@ export default function Clock({ country }: ClockProps) {
     }).format(now);
 
     return (
-        <div className={`${styles.clock} flex flex-col gap-10 rounded-2xl px-10 py-5`}>
-            <div className="flex justify-between">
-                <p className="text-4xl font-bold">{country}</p>
+        <div className={`${styles.clock} mx-10 sm:mx-0 rounded-2xl px-5 md:px-7 lg:px-8 py-3 md:py-4 lg:py-5`}>
+            <div className="flex justify-between mb-10">
+                <p className="text-2xl sm:text-2xl md:text-4xl font-bold">{country}</p>
                 <img src={flag} alt="flag country" />
             </div>
 
-            <div className="flex flex-col gap-3">
-                <p className="text-7xl font-bold">{time}</p>
-                <p className="text-3xl opacity-60 font-light">{date} ({timeState})</p>
+            <div className="flex flex-col sm:gap-1 md:gap-3">
+                <p className="text-4xl sm:text-4xl md:text-5xl lg:text-7xl font-bold">{time}</p>
+                <p className="text-lg sm:text-lg md:text-xl lg:text-3xl opacity-60 font-light">{date} ({timeState})</p>
                 <p></p>
             </div>
 

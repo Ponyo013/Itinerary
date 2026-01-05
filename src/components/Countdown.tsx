@@ -58,17 +58,17 @@ export default function Countdown({ targetDate }: CountdownProps) {
 
     return (
         <div className={`${styles.countdown}`}>
-            <h1 className='text-4xl sm:text-5xl md:text-7xl text-white font-bold text-center mb-8 sm:mb-12 md:mb-24'>China Family Trip 2026</h1>
+            <h1 className='text-3xl sm:text-5xl lg:text-6xl xl:text-7xl text-white font-bold text-center mb-8 sm:mb-12 md:mb-24'>China Family Trip 2026</h1>
             <div className="flex justify-center">
                 {timeUnits.map(({ label, value }, index) => (
                     <div key={label} className="flex items-center">
-                        <div className="flex flex-col gap-2 sm:gap-4 items-center">
-                            <p className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-normal">{pad(value)}</p>
-                            <p className="sm:text-2xl lg:text-3xl font-bold opacity-50">{label}</p>
+                        <div className="flex flex-col sm:gap-4 items-center">
+                            <p className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-normal">{pad(value)}</p>
+                            <p className="text-sm sm:text-2xl lg:text-3xl font-bold opacity-50">{label}</p>
                         </div>
 
                         {index !== timeUnits.length - 1 && (
-                            <div className="mx-6 sm:mx-10 md:mx-14 lg:mx-20 w-0.5 h-7 sm:h-12 md:h-17.5 bg-gray-300" />
+                            <div className="mx-5 sm:mx-10 md:mx-14 lg:mx-20 w-0.5 h-6 sm:h-12 md:h-17.5 bg-gray-300" />
                         )}
                     </div>
                 ))}

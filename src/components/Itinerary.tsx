@@ -1,5 +1,5 @@
 import Styles from "../style/Style.module.css"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 
 type ItineraryItem = {
     "Tanggal": string;
@@ -10,7 +10,12 @@ type ItineraryItem = {
 };
 
 export default function Itinerary() {
+    let globalIndex = 0
+
     const [data, setData] = useState<ItineraryItem[]>([])
+
+    const textRefs = useRef<(HTMLParagraphElement | null)[]>([]);
+    const [lineCounts, setLineCounts] = useState<number[]>([]);
 
     useEffect(() => {
         const url = "https://script.google.com/macros/s/AKfycbyNC1kyP-4tT8dgGUZnuknEeGzHV5mZwl2X1MIOUL_3E_wcVYCO9l6joIRlQTuo4anW/exec?ts=" + new Date().getTime();
@@ -45,7 +50,10 @@ export default function Itinerary() {
             if (!dateKey) return acc;
 
             acc[dateKey] = acc[dateKey] || [];
-            acc[dateKey].push(item);
+            acc[dateKey].push({
+                ...item,
+                "Lokasi / Catatan": item["Lokasi / Catatan"] || "-"
+            });
 
             if (item["Tanggal"]) lastValidDate = dateKey;
 
@@ -55,50 +63,80 @@ export default function Itinerary() {
 
     const groupedData = groupByFormattedDate(data);
 
+    // Calculate lines
+    useEffect(() => {
+        const counts = textRefs.current.map((el) => {
+            if (!el) return 0
+
+            const parent = el.parentElement
+            if (!parent) return 0
+
+            const style = window.getComputedStyle(el);
+            const lineHeight = parseFloat(style.lineHeight);
+
+            return Math.round(parent.scrollHeight / lineHeight);
+        });
+
+        setLineCounts(counts);
+    }, [groupedData]);
+
+    const getLineHeightClass = (lines: number) => {
+        switch (lines) {
+            case 2: return "h-12 sm:h-17 md:h-19 lg:h-22";
+            case 3: return "h-18 sm:h-23 md:h-28 lg:h-36";
+            case 4: return "h-23 sm:h-26 md:h-35 lg:h-43";
+            case 5: return "h-26 sm:h-37 md:h-44 lg:h-52";
+            case 6: return "h-32 sm:h-48 md:h-54 lg:h-64";
+            case 7: return "h-36 sm:h-60 lg:h-72"
+            case 8: return "h-42 sm:h-68"
+            case 9: return "h-46 sm:h-70"
+            case 10: return "h-72"
+            default: return "h-74"
+        }
+    };
+
     return (
         <div>
-            {/* On Going */}
-
-
             {/* List Itinerary */}
-            <div>
-                <h1 className={`${Styles.head} text-7xl text-white font-bold mb-12 text-center`}>Itinerary</h1>
-                <div className={`${Styles.body} flex flex-col gap-12`}>
-                    {Object.entries(groupedData).map(([date, items], index) => (
-                        <div key={date} className="flex flex-col bg-white rounded-xl p-10 gap-8">
-                            <div className="flex flex-col gap-2 font-bold text-[#740001]">
-                                <h1 className="text-4xl">Day {index + 1}</h1>
-                                <h2 className="text-2xl opacity-60">{date}</h2>
-                            </div>
+            <h1 className={`${Styles.head} text-3xl sm:text-5xl md:text-7xl text-white font-bold mb-6 sm:mb-12 text-center`}>Itinerary</h1>
+            <div className={`${Styles.body} flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-12 mx-10 sm:mx-18 md:mx-24 lg:mx-36 mb-24`}>
+                {Object.entries(groupedData).map(([date, items], index) => (
+                    <div key={date} className="flex flex-col bg-white rounded-xl p-5 md:p-8 lg:p-10 gap-4">
+                        <div className="flex flex-col md:gap-1 lg:gap-2 font-bold text-[#740001]">
+                            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl">Day {index + 1}</h1>
+                            <h2 className="text-md sm:text-lg md:text-xl lg:text-2xl opacity-60">{date}</h2>
+                        </div>
 
-                            <div className="flex flex-col gap-6">
-                                {items.map((item, i) => (
-                                    <div key={i} className="flex items-start gap-4">
-                                        <div className="w-24 text-left pt-1">
-                                            <p className="text-3xl">{item["Waktu"]}</p>
-                                        </div>
+                        {items.map((item, i) => {
+                            const currentIndex = globalIndex++;
 
-                                        {/* timeline */}
-                                        <div className="relative flex flex-col items-center w-4 mt-4">
-                                            {/* The Dot */}
-                                            <div className="w-2.5 h-2.5 bg-black rounded-full shrink-0" />
+                            return (
+                                <div key={currentIndex} className="flex items-start wrap-break-word">
+                                    <div className="max-w-150 wrap-break-word">
+                                        <p className="text-lg sm:text-xl md:text-3xl w-20 sm:w-25 md:w-35">
+                                            {item["Waktu"]}
+                                        </p>
+                                    </div>
 
-                                            {/* The Line */}
-                                            {i !== items.length - 1 && (
-                                                <div className="absolute top-2.5 w-0.5 h-20 bg-black" />
+                                    {/* Time line */}
+                                    {item["Waktu"] && (
+                                        <div className="relative flex flex-col">
+                                            <div className="absolute right-4 sm:right-6 top-2 sm:top-3 w-2 h-2 md:w-2.5 md:h-2.5 bg-black rounded-full shrink- z-20" />
+                                            {(items[i + 1]?.["Waktu"]) && (
+                                                <div className={`${getLineHeightClass(lineCounts[currentIndex])} absolute top-4 right-4.75 sm:right-6.75 md:right-7 bg-black opacity-70 w-[1.5px] md:w-0.5 z-10`} />
                                             )}
                                         </div>
+                                    )}
 
-                                        <div className="flex flex-col">
-                                            <div className="text-3xl">{item["Kegiatan"]}</div>
-                                            <div className="text-xl opacity-50">{item["Lokasi / Catatan"]}</div>
-                                        </div>
+                                    <div className="flex flex-col">
+                                        <p ref={el => { textRefs.current[currentIndex] = el }} className="text-sm sm:text-xl md:text-2xl lg:text-3xl wrap-break-word whitespace-normal leading-snug">{item["Kegiatan"]}</p>
+                                        <p className="text-[12px] sm:text-[16px] sm:text-lg lg:text-xl opacity-50">{item["Kegiatan"] !== "" ? item["Lokasi / Catatan"] : ""}</p>
                                     </div>
-                                ))}
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                ))}
             </div>
         </div>
     )
