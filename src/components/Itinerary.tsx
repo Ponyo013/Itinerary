@@ -14,8 +14,8 @@ export default function Itinerary() {
 
     const [data, setData] = useState<ItineraryItem[]>([])
 
-    const textRefs = useRef<(HTMLParagraphElement | null)[]>([]);
-    const [lineCounts, setLineCounts] = useState<number[]>([]);
+    const containerRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const [containerHeights, setContainerHeights] = useState<number[]>([]);
 
     useEffect(() => {
         const url = "https://script.google.com/macros/s/AKfycbyNC1kyP-4tT8dgGUZnuknEeGzHV5mZwl2X1MIOUL_3E_wcVYCO9l6joIRlQTuo4anW/exec?ts=" + new Date().getTime();
@@ -65,36 +65,9 @@ export default function Itinerary() {
 
     // Calculate lines
     useEffect(() => {
-        const counts = textRefs.current.map((el) => {
-            if (!el) return 0
-
-            const parent = el.parentElement
-            if (!parent) return 0
-
-            const style = window.getComputedStyle(el);
-            const lineHeight = parseFloat(style.lineHeight);
-
-            return Math.round(parent.scrollHeight / lineHeight);
-        });
-
-        setLineCounts(counts);
+        const heights = containerRefs.current.map(el => el?.offsetHeight ?? 0);
+        setContainerHeights(heights);
     }, [groupedData]);
-
-    const getLineHeightClass = (lines: number) => {
-        switch (lines) {
-            case 2: return "h-10 sm:h-17 md:h-19 lg:h-22";
-            case 3: return "h-16 sm:h-23 md:h-28 lg:h-33";
-            case 4: return "h-23 sm:h-30 md:h-35 lg:h-43";
-            case 5: return "h-24 sm:h-37 md:h-44 lg:h-52";
-            case 6: return "h-28 sm:h-44 md:h-54 lg:h-64";
-            case 7: return "h-32 sm:h-60 lg:h-72"
-            case 8: return "h-42 sm:h-68"
-            case 9: return "h-39 sm:h-70"
-            case 10: return "h-72"
-            case 12: return "h-52"
-            default: return "h-48"
-        }
-    };
 
     return (
         <div>
@@ -112,7 +85,7 @@ export default function Itinerary() {
                             const currentIndex = globalIndex++;
 
                             return (
-                                <div key={currentIndex} className="flex items-start wrap-break-word">
+                                <div key={currentIndex} ref={el => { containerRefs.current[currentIndex] = el }} className="flex items-start wrap-break-word">
                                     <div className="max-w-150 wrap-break-word">
                                         <p className="text-lg sm:text-[22px] md:text-3xl w-20 sm:w-25 md:w-35">
                                             {item["Waktu"]}
@@ -122,15 +95,16 @@ export default function Itinerary() {
                                     {/* Time line */}
                                     {item["Waktu"] && (
                                         <div className="relative flex flex-col">
-                                            <div className="absolute right-4 sm:right-6 top-2 sm:top-3 w-2 h-2 md:w-2.5 md:h-2.5 bg-black rounded-full shrink- z-20" />
+                                            <div className="absolute right-4 sm:right-6 top-2 sm:top-3 w-2 h-2 md:w-2.5 md:h-2.5 bg-black rounded-full z-20" />
                                             {(items[i + 1]?.["Waktu"]) && (
-                                                <div className={`${getLineHeightClass(lineCounts[currentIndex])} absolute top-4 right-4.75 sm:right-6.75 md:right-7 bg-black opacity-70 w-[1.5px] md:w-0.5 z-10`} />
+                                                <div style={{ height: `${containerHeights[currentIndex] + 18}px` }} className={`absolute top-3 right-4.75 sm:right-6.75 md:right-7 bg-black opacity-70 w-[1.5px] md:w-0.5 z-10`} />
                                             )}
+
                                         </div>
                                     )}
 
                                     <div className="flex flex-col">
-                                        <p ref={el => { textRefs.current[currentIndex] = el }} className="text-xs sm:text-xl md:text-2xl lg:text-3xl wrap-break-word whitespace-normal leading-snug">{item["Kegiatan"]}</p>
+                                        <p className="text-xs sm:text-xl md:text-2xl lg:text-3xl wrap-break-word whitespace-normal leading-snug">{item["Kegiatan"]}</p>
                                         <p className="text-[10px] sm:text-[16px] sm:text-lg lg:text-xl opacity-50">{item["Kegiatan"] !== "" ? item["Lokasi / Catatan"] : ""}</p>
                                     </div>
                                 </div>
