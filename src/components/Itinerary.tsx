@@ -85,12 +85,13 @@ export default function Itinerary() {
             case 2: return "h-10 sm:h-17 md:h-19 lg:h-22";
             case 3: return "h-16 sm:h-23 md:h-28 lg:h-33";
             case 4: return "h-23 sm:h-30 md:h-35 lg:h-43";
-            case 5: return "h-26 sm:h-37 md:h-44 lg:h-52";
-            case 6: return "h-32 sm:h-48 md:h-54 lg:h-64";
+            case 5: return "h-24 sm:h-37 md:h-44 lg:h-52";
+            case 6: return "h-28 sm:h-44 md:h-54 lg:h-64";
             case 7: return "h-32 sm:h-60 lg:h-72"
             case 8: return "h-42 sm:h-68"
             case 9: return "h-39 sm:h-70"
             case 10: return "h-72"
+            case 12: return "h-52"
             default: return "h-48"
         }
     };
