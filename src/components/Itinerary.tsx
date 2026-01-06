@@ -13,24 +13,47 @@ export default function Itinerary() {
     let globalIndex = 0
 
     const [data, setData] = useState<ItineraryItem[]>([])
-
-    const containerRefs = useRef<(HTMLDivElement | null)[]>([]);
-    const [containerHeights, setContainerHeights] = useState<number[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [progress, setProgress] = useState(0);
 
     useEffect(() => {
         const url = "https://script.google.com/macros/s/AKfycbyNC1kyP-4tT8dgGUZnuknEeGzHV5mZwl2X1MIOUL_3E_wcVYCO9l6joIRlQTuo4anW/exec?ts=" + new Date().getTime();
 
-        const fetchData = () => {
-            fetch(url)
-                .then(res => res.json())
-                .then((json: ItineraryItem[]) => setData(json))
-                .catch(err => console.error("Fetch error:", err));
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                const res = await fetch(url);
+                const json: ItineraryItem[] = await res.json();
+                setData(json);
+
+                setProgress(100);
+                setTimeout(() => setLoading(false), 300);
+            } catch (err) {
+                console.error(err);
+                setLoading(false);
+            }
         };
 
         fetchData();
         const interval = setInterval(fetchData, 5000);
         return () => clearInterval(interval);
     }, []);
+
+    // Loading animation
+    useEffect(() => {
+        if (!loading) return;
+
+        setProgress(0);
+
+        const interval = setInterval(() => {
+            setProgress(prev => {
+                if (prev >= 90) return prev;
+                return prev + 5;
+            });
+        }, 200);
+
+        return () => clearInterval(interval);
+    }, [loading]);
 
     const formatTanggal = (iso: string) => {
         return new Date(iso).toLocaleDateString("en-us", {
@@ -64,6 +87,9 @@ export default function Itinerary() {
     const groupedData = groupByFormattedDate(data);
 
     // Calculate lines
+    const containerRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const [containerHeights, setContainerHeights] = useState<number[]>([]);
+
     useEffect(() => {
         const heights = containerRefs.current.map(el => el?.offsetHeight ?? 0);
         setContainerHeights(heights);
@@ -71,8 +97,22 @@ export default function Itinerary() {
 
     return (
         <div>
-            {/* List Itinerary */}
+            {/* Text Heading */}
             <h1 className={`${Styles.head} text-3xl sm:text-5xl md:text-7xl text-white font-bold mb-6 sm:mb-12 text-center`}>Itinerary</h1>
+
+            {/* Loading Animation */}
+            {loading && data.length === 0 && (
+                <div className="w-full flex justify-center mb-6 sm:mb-10">
+                    <div className="w-full max-w-xl bg-white rounded-full h-2 overflow-hidden">
+                        <div
+                            className="h-full bg-[#740001] transition-all duration-300 ease-out"
+                            style={{ width: `${progress}%` }}
+                        />
+                    </div>
+                </div>
+            )}
+
+            {/* List Itinerary */}
             <div className={`${Styles.body} flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-12 mx-10 sm:mx-18 md:mx-24 lg:mx-36 xl:mx-64 mb-24`}>
                 {Object.entries(groupedData).map(([date, items], index) => (
                     <div key={date} className="flex flex-col bg-white rounded-xl p-5 md:p-8 lg:p-10 gap-4">

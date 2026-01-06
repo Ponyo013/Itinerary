@@ -3,8 +3,10 @@ import Clock from './components/Clock'
 import Countdown from './components/Countdown'
 import Documents from './components/Documents'
 import Itinerary from './components/Itinerary'
+import Button from './components/ScrollToTopButton'
 
 function App() {
+
   return (
     <>
       <div className='h-screen flex flex-col gap-16 sm:gap-24 md:gap-30 lg:gap-36 items-center mb-24'>
@@ -25,6 +27,9 @@ function App() {
 
         {/* Itinerary */}
         <Itinerary />
+
+        {/* Back To Top Button */}
+        <Button />
       </div>
     </>
   )
