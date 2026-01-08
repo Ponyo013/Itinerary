@@ -2,7 +2,7 @@ import './App.css'
 import Clock from './components/Clock'
 import Countdown from './components/Countdown'
 import Documents from './components/Documents'
-import Kurs from './components/Kurs'
+// import Kurs from './components/Kurs'
 import Itinerary from './components/Itinerary'
 import Button from './components/ScrollToTopButton'
 
