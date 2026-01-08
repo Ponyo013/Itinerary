@@ -24,7 +24,7 @@ function App() {
         </div>
 
         <Documents />
-        <Kurs />
+        {/* <Kurs /> */}
         <Itinerary />
 
         {/* Back To Top Button */}
