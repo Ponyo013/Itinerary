@@ -3,6 +3,7 @@ import Clock from './components/Clock'
 import Countdown from './components/Countdown'
 import Documents from './components/Documents'
 // import Kurs from './components/Kurs'
+// import Expense from './components/Expense'
 import Itinerary from './components/Itinerary'
 import Button from './components/ScrollToTopButton'
 
@@ -24,7 +25,12 @@ function App() {
         </div>
 
         <Documents />
-        {/* <Kurs /> */}
+{/* 
+        <div className='flex gap-10'>
+          <Kurs />
+          <Expense />
+        </div> */}
+
         <Itinerary />
 
         {/* Back To Top Button */}

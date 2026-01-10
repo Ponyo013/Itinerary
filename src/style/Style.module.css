@@ -19,3 +19,8 @@
 .body {
   font-family: "Inria sans", sans-serif;
 }
+
+select {
+  -webkit-appearance: none;
+  appearance: none;
+}

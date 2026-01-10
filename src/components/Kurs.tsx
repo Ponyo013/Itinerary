@@ -196,66 +196,65 @@ export default function Kurs() {
     };
 
     return (
-        <div className="flex justify-evenly gap-6">
-            <div>
-                <h1 className={`${Styles.head} text-3xl sm:text-5xl md:text-7xl text-white font-bold mb-6 sm:mb-12 text-center`}>Kurs</h1>
+        <div>
+            <h1 className={`${Styles.head} text-3xl sm:text-5xl md:text-7xl text-white font-bold mb-6 sm:mb-12 text-center`}>Kurs</h1>
 
-                <div className="bg-white rounded-xl p-8 flex flex-col gap-6 w-lg">
-                    {/* Kurs */}
-                    <InputField
-                        label="1 CNY = ? IDR"
-                        country="CN"
-                        value={rate}
-                        onChange={handleRateChange}
-                        onBlur={handleRateBlur}
-                    />
+            <div className="bg-white rounded-xl p-8 flex flex-col gap-6 w-lg">
+                {/* Kurs */}
+                <InputField
+                    label="1 CNY = ? IDR"
+                    country="CN"
+                    value={rate}
+                    onChange={handleRateChange}
+                    onBlur={handleRateBlur}
+                    placeholder="2.200"
+                />
 
-                    {/* Amount */}
-                    <InputField
-                        label="Amount"
-                        value={direction === "CNY-IDR" ? cny : idr}
-                        onChange={handleAmountChange}
-                        country={direction === "CNY-IDR" ? "CN" : "ID"}
-                    />
+                {/* Amount */}
+                <InputField
+                    label="Amount"
+                    value={direction === "CNY-IDR" ? cny : idr}
+                    onChange={handleAmountChange}
+                    country={direction === "CNY-IDR" ? "CN" : "ID"}
+                />
 
-                    {/* error Message */}
-                    {rateError && (
-                        <p className="text-sm text-red-600 -mt-3">
-                            {rateError}
-                        </p>
-                    )}
+                {/* error Message */}
+                {rateError && (
+                    <p className="text-sm text-red-600 -mt-3">
+                        {rateError}
+                    </p>
+                )}
 
-                    {/* Recent Rates */}
-                    {recentRates.length > 0 && (
-                        <div className="flex gap-2 flex-wrap text-sm">
-                            {recentRates.map((r, i) => (
-                                <button
-                                    key={i}
-                                    onClick={() => handleSelectRecent(r)}
-                                    className="px-3 py-1 rounded-full bg-gray-200 hover:bg-gray-300"
-                                >
-                                    {formatID(r)}
-                                </button>
-                            ))}
-                        </div>
-                    )}
-
-                    <div className="flex justify-center">
-                        <Icon
-                            icon="hugeicons:arrow-up-down"
-                            className="w-10 h-10 text-white bg-[#740001] rounded-full p-2 hover:grayscale-25 cursor-pointer"
-                            onClick={handleSwap}
-                        />
+                {/* Recent Rates */}
+                {recentRates.length > 0 && (
+                    <div className="flex gap-2 flex-wrap text-sm">
+                        {recentRates.map((r, i) => (
+                            <button
+                                key={i}
+                                onClick={() => handleSelectRecent(r)}
+                                className="px-3 py-1 rounded-full bg-gray-200 hover:bg-gray-300"
+                            >
+                                {formatID(r)}
+                            </button>
+                        ))}
                     </div>
+                )}
 
-                    {/* IDR */}
-                    <InputField
-                        label="Conversion"
-                        value={direction === "CNY-IDR" ? idr : cny}
-                        onChange={handleConversionChange}
-                        country={direction === "CNY-IDR" ? "ID" : "CN"}
+                <div className="flex justify-center">
+                    <Icon
+                        icon="hugeicons:arrow-up-down"
+                        className="w-10 h-10 text-white bg-[#740001] rounded-full p-2 hover:grayscale-25 cursor-pointer"
+                        onClick={handleSwap}
                     />
                 </div>
+
+                {/* IDR */}
+                <InputField
+                    label="Conversion"
+                    value={direction === "CNY-IDR" ? idr : cny}
+                    onChange={handleConversionChange}
+                    country={direction === "CNY-IDR" ? "ID" : "CN"}
+                />
             </div>
         </div>
     );

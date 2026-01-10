@@ -1,77 +1,98 @@
-import chinaFlag from "../../assets/China (CN)_Rounded.svg"
-import indonesiFlag from "../../assets/Indonesia (ID)_Rounded.svg"
+import type React from "react";
+import chinaFlag from "../../assets/China (CN)_Rounded.svg";
+import indonesiFlag from "../../assets/Indonesia (ID)_Rounded.svg";
+
+type CountryCode = "ID" | "CN";
 
 type InputFieldProps = {
     label: string;
+    name?: string;
     inputMode?: "numeric" | "text";
-    prefix?: string;
-    country?: "ID" | "CN";
+    prefix?: React.ReactNode;
+    country?: CountryCode;
     type?: string;
     min?: number;
     readOnly?: boolean;
+    required?: boolean;
     value?: string | number;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     placeholder?: string;
+};
+
+const COUNTRY_MAP: Record<
+    CountryCode,
+    { flag: string; suffix: string }
+> = {
+    ID: {
+        flag: indonesiFlag,
+        suffix: "IDR",
+    },
+    CN: {
+        flag: chinaFlag,
+        suffix: "CNY",
+    },
 };
 
 export default function InputField({
     label,
+    name,
     inputMode = "numeric",
     prefix,
     country,
     type = "text",
     min,
     readOnly = false,
+    required = false,
     value,
     onChange,
     onBlur,
     placeholder = "",
 }: InputFieldProps) {
-    const flag =
-        country === "ID"
-            ? indonesiFlag
-            : country === "CN"
-                ? chinaFlag
-                : null;
-
-    const suffix =
-        country === "ID"
-            ? "IDR"
-            : country === "CN"
-                ? "CNY"
-                : "";
+    const countryData = country ? COUNTRY_MAP[country] : null;
 
     return (
         <div className="space-y-2.5">
             <p className="text-xl text-gray-800 font-bold">{label}</p>
 
             <div className="relative">
+                {/* PREFIX */}
                 {prefix && (
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-800 font-bold text-xl pointer-events-none">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-1 text-gray-800 pointer-events-none">
                         {prefix}
                     </span>
                 )}
 
-                {flag && (
+                {/* SUFFIX / FLAG */}
+                {countryData && (
                     <span className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 pointer-events-none">
-                        <img src={flag} alt={country} />
-                        {suffix && <span className="text-2xl font-bold">{suffix}</span>}
+                        <img
+                            src={countryData.flag}
+                            alt={country}
+                            className="h-6 w-6"
+                        />
+                        <span className="text-2xl font-bold">
+                            {countryData.suffix}
+                        </span>
                     </span>
                 )}
 
+                {/* INPUT */}
                 <input
                     type={type}
+                    name={name}
                     inputMode={inputMode}
                     min={min}
                     readOnly={readOnly}
+                    required={required}
                     value={value}
                     onChange={onChange}
                     onBlur={onBlur}
                     placeholder={placeholder}
                     className={`
                         w-full h-14
-                        ${prefix ? "pl-11" : "px-4"}
+                        ${prefix ? "pl-14" : "px-4"}
+                        ${countryData ? "pr-24" : "pr-4"}
                         text-xl
                         border-2 border-gray-500 rounded-lg
                         focus:outline-none focus:border-[#7b3a3b]
