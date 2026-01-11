@@ -2,6 +2,7 @@ import { useState } from "react"
 import Styles from "../style/Style.module.css"
 import InputField from "./ui/Inputfield"
 import { Icon } from "@iconify/react"
+import DateInput from "./ui/DateInput"
 
 export default function Expense() {
     // Loading 
@@ -112,13 +113,14 @@ export default function Expense() {
 
             <form onSubmit={handleSubmit} id="expense-form" className="bg-white rounded-xl p-5 sm:p-8 flex flex-col mx-10 sm:mx-0 gap-6 sm:w-lg">
                 {/* Date */}
-                <InputField
-                    label="Date"
-                    name="date"
-                    type="date"
+                <DateInput
                     value={form.date}
-                    onChange={handleChange}
-                    required
+                    onChange={(value) =>
+                        setForm(prev => ({
+                            ...prev,
+                            date: value,
+                        }))
+                    }
                 />
 
                 {/* Category Expenses */}
