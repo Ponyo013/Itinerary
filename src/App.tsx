@@ -2,8 +2,8 @@ import './App.css'
 import Clock from './components/Clock'
 import Countdown from './components/Countdown'
 import Documents from './components/Documents'
-// import Kurs from './components/Kurs'
-// import Expense from './components/Expense'
+import Kurs from './components/Kurs'
+import Expense from './components/Expense'
 import Itinerary from './components/Itinerary'
 import Button from './components/ScrollToTopButton'
 
@@ -25,11 +25,11 @@ function App() {
         </div>
 
         <Documents />
-{/* 
-        <div className='flex gap-10'>
+
+        <div className='flex flex-col gap-20 xl:gap-10 xl:flex-row'>
           <Kurs />
           <Expense />
-        </div> */}
+        </div>
 
         <Itinerary />
 

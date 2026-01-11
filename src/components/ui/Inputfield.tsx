@@ -52,8 +52,8 @@ export default function InputField({
     const countryData = country ? COUNTRY_MAP[country] : null;
 
     return (
-        <div className="space-y-2.5">
-            <p className="text-xl text-gray-800 font-bold">{label}</p>
+        <div className="space-y-2 sm:space-y-2.5">
+            <p className="text-md sm:text-lg md:text-xl text-gray-800 font-bold">{label}</p>
 
             <div className="relative">
                 {/* PREFIX */}
@@ -69,9 +69,9 @@ export default function InputField({
                         <img
                             src={countryData.flag}
                             alt={country}
-                            className="h-6 w-6"
+                            className="h-4 w-4 md:h-6 md:w-6"
                         />
-                        <span className="text-2xl font-bold">
+                        <span className="text-md sm:text-lg md:text-2xl font-bold">
                             {countryData.suffix}
                         </span>
                     </span>
@@ -90,10 +90,12 @@ export default function InputField({
                     onBlur={onBlur}
                     placeholder={placeholder}
                     className={`
-                        w-full h-14
-                        ${prefix ? "pl-14" : "px-4"}
+                        w-full sm:h-14
+                        h-10
+                        ${prefix ? "pl-14" : "px-3 sm:px-4"}
                         ${countryData ? "pr-24" : "pr-4"}
-                        text-xl
+                        sm:text-xl
+                        text-md
                         border-2 border-gray-500 rounded-lg
                         focus:outline-none focus:border-[#7b3a3b]
                         focus:ring-1 focus:ring-[#7b3a3b]

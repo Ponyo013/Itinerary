@@ -199,7 +199,7 @@ export default function Kurs() {
         <div>
             <h1 className={`${Styles.head} text-3xl sm:text-5xl md:text-7xl text-white font-bold mb-6 sm:mb-12 text-center`}>Kurs</h1>
 
-            <div className="bg-white rounded-xl p-8 flex flex-col gap-6 w-lg">
+            <div className="bg-white rounded-xl p-5 sm:p-8 flex flex-col mx-10 sm:mx-0 gap-6 md:w-lg">
                 {/* Kurs */}
                 <InputField
                     label="1 CNY = ? IDR"

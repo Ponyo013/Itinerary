@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Styles from "../style/Style.module.css"
 import InputField from "./ui/Inputfield"
 import { Icon } from "@iconify/react"
@@ -110,7 +110,7 @@ export default function Expense() {
         <div>
             <h1 className={`${Styles.head} text-3xl sm:text-5xl md:text-7xl text-white font-bold mb-6 sm:mb-12 text-center`}>Expenses</h1>
 
-            <form onSubmit={handleSubmit} id="expense-form" className="bg-white rounded-xl p-8 flex flex-col gap-6 w-lg">
+            <form onSubmit={handleSubmit} id="expense-form" className="bg-white rounded-xl p-5 sm:p-8 flex flex-col mx-10 sm:mx-0 gap-6 sm:w-lg">
                 {/* Date */}
                 <InputField
                     label="Date"
@@ -123,46 +123,48 @@ export default function Expense() {
 
                 {/* Category Expenses */}
                 <div>
-                    <p className="text-xl text-gray-800 font-bold mb-2.5">Category</p>
+                    <p className="text-md sm:text-lg md:text-xl text-gray-800 font-bold mb-2 sm:mb-2.5">Category</p>
 
                     <div className="relative">
                         <select name="category" value={form.category}
                             onChange={handleChange} className="
                             cursor-pointer
-                            px-4
-                            text-xl 
+                            px-3 sm:px-4
+                            sm:text-xl
+                            text-md
                             border-2 border-gray-500 
                             rounded-lg 
                             focus:outline-none focus:border-[#7b3a3b] focus:ring-1 focus:ring-[#7b3a3b] 
-                            w-full h-14">
+                            w-full h-11 sm:h-14">
                             <option value="Transportation">Transportation</option>
                             <option value="Foods">Foods</option>
                             <option value="Snacks">Snacks</option>
                             <option value="Other">Other</option>
                         </select>
-                        <Icon icon="line-md:chevron-down" className="h-6 w-6 absolute top-1/3 right-4" />
+                        <Icon icon="line-md:chevron-down" className="h-4 w-4 sm:h-6 sm:w-6 absolute top-1/3 right-4" />
                     </div>
                 </div>
 
                 {/* Currency Dropdown */}
                 <div>
-                    <p className="text-xl text-gray-800 font-bold mb-2.5">Currency</p>
+                    <p className="text-md sm:text-lg md:text-xl text-gray-800 font-bold mb-2 sm:mb-2.5">Currency</p>
 
                     <div className="relative">
                         <select value={form.currency}
                             onChange={handleChange} name="currency" id="select" className="
                             cursor-pointer
-                            px-4
-                            text-xl 
+                            px-3 sm:px-4
+                            sm:text-xl
+                            text-md
                             border-2 border-gray-500 
                             rounded-lg 
                             focus:outline-none focus:border-[#7b3a3b] focus:ring-1 focus:ring-[#7b3a3b] 
-                            w-full h-14">
+                            w-full h-11 sm:h-14">
 
                             <option value="IDR">IDR</option>
                             <option value="RMB">RMB</option>
                         </select>
-                        <Icon icon="line-md:chevron-down" className="h-6 w-6 absolute top-1/3 right-4" />
+                        <Icon icon="line-md:chevron-down" className="h-4 w-4 sm:h-6 sm:w-6 absolute top-1/3 right-4" />
                     </div>
                 </div>
 
@@ -177,43 +179,45 @@ export default function Expense() {
 
                 {/* Category Payment */}
                 <div>
-                    <p className="text-xl text-gray-800 font-bold mb-2.5">Payment Type</p>
+                    <p className="text-md sm:text-lg md:text-xl text-gray-800 font-bold  mb-2 sm:mb-2.5">Payment Type</p>
 
                     <div className="relative">
                         <select value={form.paymentType}
                             onChange={handleChange} name="paymentType" id="select" className="
                             cursor-pointer
-                            px-4
-                            text-xl 
+                            px-3 sm:px-4
+                            sm:text-xl
+                            text-md
                             border-2 border-gray-500 
                             rounded-lg 
                             focus:outline-none focus:border-[#7b3a3b] focus:ring-1 focus:ring-[#7b3a3b] 
-                            w-full h-14">
+                            w-full h-11 sm:h-14">
                             <option value="Alipay">Ali pay</option>
                             <option value="CC">CC</option>
                             <option value="Cash">Cash</option>
                         </select>
-                        <Icon icon="line-md:chevron-down" className="h-6 w-6 absolute top-1/3 right-4" />
+                        <Icon icon="line-md:chevron-down" className="h-4 w-4 sm:h-6 sm:w-6 absolute top-1/3 right-4" />
                     </div>
                 </div>
 
                 {/* Notes */}
                 <div>
-                    <p className="text-xl text-gray-800 font-bold mb-2.5">Notes</p>
+                    <p className="text-md sm:text-lg md:text-xl text-gray-800 font-bold mb-2 sm:mb-2.5">Notes</p>
                     <textarea value={form.notes}
                         onChange={handleChange} name="notes" id="notes" form="expense-form" rows={5} className="
                         p-3
-                        text-xl 
+                        sm:text-xl
+                        text-md
                         border-2 border-gray-500 
                         rounded-lg 
                         focus:outline-none focus:border-[#7b3a3b] focus:ring-1 focus:ring-[#7b3a3b] 
                             w-full"></textarea>
                 </div>
 
-                <button type="submit" disabled={loading} className="flex justify-center text-xl font-medium p-3 text-white bg-[#5A090A] rounded-xl hover:grayscale-25 cursor-pointer">
+                <button type="submit" disabled={loading} className="flex justify-center text-md sm:text-xl font-medium p-2 sm:p-3 text-white bg-[#5A090A] rounded-lg sm:rounded-xl hover:grayscale-25 cursor-pointer">
                     {loading ? (
                         <>
-                            <div className=" w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
 
                         </>
                     ) : (
@@ -241,9 +245,6 @@ export default function Expense() {
                     </div>
                 </div>
             )}
-
-
-
         </div >
     )
 }
