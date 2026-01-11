@@ -28,6 +28,7 @@ export default function DateInput({ value, onChange }: Props) {
                                focus:ring-1 focus:ring-[#7b3a3b] w-full sm:w-md h-11 sm:h-14"
                     wrapperClassName="w-full"
                     placeholderText="dd/MM/yyyy"
+                    required
                 />
 
                 <Icon

@@ -50,6 +50,14 @@ export default function Expense() {
         } finally {
             setLoading(false)
             setShowModal(true)
+            setForm({
+                date: "",
+                category: "Transportation",
+                currency: "RMB",
+                amount: "",
+                paymentType: "Alipay",
+                notes: "",
+            })
         }
     };
 
@@ -141,6 +149,7 @@ export default function Expense() {
                             <option value="Transportation">Transportation</option>
                             <option value="Foods">Foods</option>
                             <option value="Snacks">Snacks</option>
+                            <option value="Attractions">Attractions</option>
                             <option value="Other">Other</option>
                         </select>
                         <Icon icon="line-md:chevron-down" className="h-4 w-4 sm:h-6 sm:w-6 absolute top-1/3 right-4" />
