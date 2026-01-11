@@ -8,12 +8,6 @@ type Props = {
 };
 
 export default function DateInput({ value, onChange }: Props) {
-    const formatDate = (date: Date) => {
-        return new Intl.DateTimeFormat("en-GB", {
-            day: "2-digit",
-            month: "short",
-        }).format(date);
-    };
 
     return (
         <div>
@@ -23,17 +17,17 @@ export default function DateInput({ value, onChange }: Props) {
 
             <div className="relative">
                 <DatePicker
-                    selected={value ? new Date(`2025 ${value}`) : null}
+                    selected={value ? new Date(value) : null}
                     onChange={(date: Date | null) => {
                         if (!date) return;
-                        onChange(formatDate(date));
+                        onChange(date.toISOString().split("T")[0]);
                     }}
-                    dateFormat="yyyy/MM/dd"
+                    dateFormat="dd/MM/yyyy"
                     className="px-3 sm:px-4 sm:text-xl text-md border-2 border-gray-500
                                rounded-lg focus:outline-none focus:border-[#7b3a3b]
                                focus:ring-1 focus:ring-[#7b3a3b] w-full sm:w-md h-11 sm:h-14"
                     wrapperClassName="w-full"
-                    placeholderText="yyyy/MM/dd"
+                    placeholderText="dd/MM/yyyy"
                 />
 
                 <Icon
