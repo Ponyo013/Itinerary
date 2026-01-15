@@ -24,7 +24,7 @@ export default function Kurs() {
             .replace(/\./g, "")   // hapus pemisah ribuan
             .replace(",", ".");   // koma 
 
-        return Number(normalized);
+        return parseFloat(normalized);
     };
 
     const formatID = (value: number, decimals = 2) =>
@@ -117,7 +117,14 @@ export default function Kurs() {
         let val = e.target.value;
 
         // Hanya ambil angka dan titik desimal
-        const sanitized = val.replace(/[^0-9.]/g, "");
+        const sanitized = val.replace(/[^0-9,]/g, "");
+
+        const dotCount = (sanitized.match(/\,/g) || []).length;
+
+        if (dotCount > 1) {
+            // kalau ada lebih dari 1 titik, jangan update
+            return;
+        }
 
         // Jika input kosong, reset state
         if (!sanitized) {
@@ -140,10 +147,10 @@ export default function Kurs() {
 
         // Set state berdasarkan direction
         if (direction === "CNY-IDR") {
-            setCny(formatID(num));
+            setCny(sanitized);
             setIdr(rateNum ? formatID(num * rateNum, 2) : "");
         } else {
-            setIdr(formatID(num));
+            setIdr(formatID(Number(sanitized)));
             setCny(rateNum ? formatID(num / rateNum, 2) : "");
         }
     };
@@ -153,7 +160,14 @@ export default function Kurs() {
         const val = e.target.value;
 
         // Hanya ambil angka dan titik desimal
-        const sanitized = val.replace(/[^0-9.]/g, "");
+        const sanitized = val.replace(/[^0-9,]/g, "");
+
+        const dotCount = (sanitized.match(/\,/g) || []).length;
+
+        if (dotCount > 1) {
+            // kalau ada lebih dari 1 titik, jangan update
+            return;
+        }
 
         // Jika input kosong, reset state
         if (!sanitized) {
@@ -176,10 +190,10 @@ export default function Kurs() {
 
         // Set state berdasarkan direction
         if (direction === "CNY-IDR") {
-            setIdr(formatID(num));
+            setIdr(formatID(Number(sanitized)));
             setCny(num && rateNum ? formatID(num / rateNum, 2) : "");
         } else {
-            setCny(formatID(num));
+            setCny(sanitized);
             setIdr(num && rateNum ? formatID(num * rateNum, 2) : "");
         }
     };

@@ -15,6 +15,7 @@ export default function Expense() {
         currency: string;
         amount: string;
         paymentType: string;
+        pic: string;
         notes: string;
     };
 
@@ -24,6 +25,7 @@ export default function Expense() {
         currency: "RMB",
         amount: "",
         paymentType: "Alipay",
+        pic: "Aping",
         notes: "",
     });
 
@@ -56,6 +58,7 @@ export default function Expense() {
                 currency: "RMB",
                 amount: "",
                 paymentType: "Alipay",
+                pic: "Aping",
                 notes: "",
             })
         }
@@ -206,6 +209,31 @@ export default function Expense() {
                             <option value="Alipay">Ali pay</option>
                             <option value="CC">CC</option>
                             <option value="Cash">Cash</option>
+                        </select>
+                        <Icon icon="line-md:chevron-down" className="h-4 w-4 sm:h-6 sm:w-6 absolute top-1/3 right-4" />
+                    </div>
+                </div>
+
+                {/* Category Payment */}
+                <div>
+                    <p className="text-md sm:text-lg md:text-xl text-gray-800 font-bold  mb-2 sm:mb-2.5">PIC</p>
+
+                    <div className="relative">
+                        <select value={form.pic}
+                            onChange={handleChange} name="pic" id="select" className="
+                            cursor-pointer
+                            px-3 sm:px-4
+                            sm:text-xl
+                            text-md
+                            border-2 border-gray-500 
+                            rounded-lg 
+                            focus:outline-none focus:border-[#7b3a3b] focus:ring-1 focus:ring-[#7b3a3b] 
+                            w-full h-11 sm:h-14">
+                            <option value="Aping">Aping</option>
+                            <option value="Athing">Athing</option>
+                            <option value="Mami">Mami</option>
+                            <option value="Papi">Papi</option>
+                            <option value="Reno">Reno</option>
                         </select>
                         <Icon icon="line-md:chevron-down" className="h-4 w-4 sm:h-6 sm:w-6 absolute top-1/3 right-4" />
                     </div>
