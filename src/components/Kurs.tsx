@@ -228,6 +228,7 @@ export default function Kurs() {
                 <InputField
                     label="Amount"
                     value={direction === "CNY-IDR" ? cny : idr}
+                    inputMode="text"
                     onChange={handleAmountChange}
                     country={direction === "CNY-IDR" ? "CN" : "ID"}
                 />
@@ -266,6 +267,7 @@ export default function Kurs() {
                 <InputField
                     label="Conversion"
                     value={direction === "CNY-IDR" ? idr : cny}
+                    inputMode="text"
                     onChange={handleConversionChange}
                     country={direction === "CNY-IDR" ? "ID" : "CN"}
                 />
