@@ -200,6 +200,7 @@ export default function Expense() {
                 <InputField
                     label="Amount"
                     name="amount"
+                    inputMode="text"
                     type="text"
                     value={form.amount}
                     onChange={handleChange}
