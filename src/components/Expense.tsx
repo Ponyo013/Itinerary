@@ -105,13 +105,28 @@ export default function Expense() {
         const { name, value } = e.target;
 
         if (name === "amount") {
-            const raw = cleanNumber(value);
-            const formatted = isNaN(raw) ? "" : formatID(raw);
+            if (form.currency !== "RMB") {
+                const raw = cleanNumber(value);
+                const formatted = isNaN(raw) ? "" : formatID(raw);
 
-            setForm(prev => ({
-                ...prev,
-                amount: formatted,
-            }));
+                setForm(prev => ({
+                    ...prev,
+                    amount: formatted,
+                }));
+            } else {
+                const sanitized = value.replace(/[^0-9,]/g, "");
+                const dotCount = (sanitized.match(/\,/g) || []).length;
+
+                if (dotCount > 1 || sanitized.charAt(0) === ",") {
+                    return;
+                }
+
+                setForm(prev => ({
+                    ...prev,
+                    amount: sanitized,
+                }));
+            }
+
             return;
         }
 
@@ -185,7 +200,7 @@ export default function Expense() {
                 <InputField
                     label="Amount"
                     name="amount"
-                    type="numeric"
+                    type="text"
                     value={form.amount}
                     onChange={handleChange}
                     required
